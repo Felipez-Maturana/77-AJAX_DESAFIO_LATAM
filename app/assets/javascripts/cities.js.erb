@@ -1,0 +1,15 @@
+$(document).on('turbolinks:load', function() {
+  $("[name='country[name]']").on('change', function(event) {
+    // console.log($(this).val());
+    var country_id = $(this).val();
+    $.ajax({
+      url: '/cities',
+      type: 'GET',
+      dataType: 'script',
+      data: {
+        country_id: country_id
+      }
+    });
+
+  });
+});

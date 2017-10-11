@@ -1,0 +1,46 @@
+$(document).on('turbolinks:load', function(){
+  $("input[name='query']").on('input', function(event) {
+    console.log($(this).val());
+    /* Act on the event */
+    var buscar =  $(this).val();
+    $.ajax({
+      url: '/posts',
+      type: 'GET',
+      dataType: 'script',
+      data: {
+        filtro: buscar
+      }
+    });
+
+  });
+
+
+  $('button[name="enviar"]').on('click', function(event){
+    event.preventDefault();
+    var at = $("input[name='authenticity_token']").val();
+    var title = $("input[name='title']").val();
+    var content = $("textarea[name='content']").val();
+
+    // console.log(at);
+    // console.log(title);
+    // console.log(content);
+    $.ajax({
+      url: '/posts',
+      type: 'POST',
+      dataType: 'script',
+      data: {
+        authenticity_token: at,
+        post: {
+          title: title,
+          content: content
+        }
+      }
+    })
+    .done(function(){
+      title.val('');
+      content.val('');
+    });
+
+
+  });
+});
